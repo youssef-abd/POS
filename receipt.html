@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reçu de Paiement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f1f1f1;
+            padding: 20px;
+        }
+
+        .receipt {
+            width: 300px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #000;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            font-size: 12px;
+            color: #000;
+        }
+
+        .header, .footer {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header p, .footer p {
+            margin: 2px 0;
+        }
+
+        .content {
+            margin-bottom: 10px;
+        }
+
+        .items {
+            border-top: 1px dashed #000;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .items p {
+            display: flex;
+            justify-content: space-between;
+            margin: 3px 0;
+        }
+
+        .total, .payment-method {
+            margin-top: 10px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .text-center .btn {
+            margin: 5px 0;
+        }
+        @media print {
+            .text-center {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="receipt">
+        <div class="header">
+            <p><strong>Ministère de la Culture</strong></p>
+            <p>2598+X9M, Rabat</p>
+            <p>0657-769179</p>
+            <p>services@minculture.gov.ma</p>
+            <hr>
+            <p><strong>--- TICKET DE CAISSE ---</strong></p>
+        </div>
+        <div class="content">
+            <p id="date-time"></p>
+            <div class="items" id="receipt-details">
+                <!-- Les détails du reçu seront insérés ici -->
+            </div>
+            <div class="total" id="total-amount"></div>
+           
+            
+        </div>
+        <div class="footer">
+            <p>Merci pour votre achat !</p>
+            <p>Document fiscal N° 230126-274</p>
+            <p>Les biens appartenant à l'une des catégories mentionnées à l'article D. 211-1 du code de la consommation bénéficient après leur mise à disposition d'une garantie légale de conformité de deux ans. Cette garantie légale de conformité ne prive pas du droit de compter sur la garantie commerciale.</p>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <button class="btn btn-primary" onclick="window.print()">Imprimer</button>
+        <a class="btn btn-secondary" href="index.html">Retour à la page d'accueil</a>
+    </div>
+
+    <script>
+         document.addEventListener('DOMContentLoaded', function () {
+            // Récupérer les détails du reçu depuis localStorage
+            const receiptDetails = localStorage.getItem('receiptDetails');
+            const paymentMethod = localStorage.getItem('paymentMethod');
+            const receiptContainer = document.getElementById('receipt-details');
+            const totalAmountElement = document.getElementById('total-amount');
+            const paymentMethodElement = document.getElementById('payment-method');
+            const dateTimeElement = document.getElementById('date-time');
+
+            // Set the date and time
+            const now = new Date();
+            dateTimeElement.innerText = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+
+            if (receiptDetails) {
+                receiptContainer.innerHTML = receiptDetails;
+            } else {
+                receiptContainer.innerHTML = '<p>Aucun reçu trouvé.</p>';
+            }
+            if (receiptDetails && paymentMethod) {
+        receiptContainer.innerHTML = receiptDetails;
+
+        // Afficher la méthode de paiement
+        const paymentMethodElement = document.createElement('div');
+        paymentMethodElement.innerHTML = `<p>Méthode de paiement:<strong>${paymentMethod}</strong></p>`;
+        receiptContainer.appendChild(paymentMethodElement);
+        } else {
+        receiptContainer.innerHTML = '<p>Aucun reçu trouvé.</p>';
+        }
+            // Set the total amount
+            totalAmountElement.innerText = `Total TTC EUR: ${getTotal()} €`;
+
+            // Set the payment method
+            paymentMethodElement.innerText = paymentMethod;
+        });
+
+        // Function to calculate total from cart items
+        function getTotal() {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+        }
+    </script>
+</body>
+
+</html>

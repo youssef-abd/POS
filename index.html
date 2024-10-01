@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vente de Tickets - Ministère de la Culture</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+</head>
+<script>
+    // Vérifier l'authentification
+    window.onload = function() {
+        if (!localStorage.getItem('authenticated')) {
+            window.location.href = 'login.html';
+        }
+    };
+</script>
+<body>
+    <div x-data="posApp()" x-init="initApp()">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+            <div class="container">
+                <button class="btn btn-link" @click="toggleCategories()">
+                    <i class="material-icons">menu</i>
+                </button>
+                <a class="navbar-brand ml-2" href="#">
+                    <img src="images/ministre.png" alt="Ministère de la Culture" height="40">
+                    <span class="ml-2 text-xl font-semibold">Ministère de la Culture</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="material-icons">shopping_cart</i>
+                                <span class="badge badge-pill badge-primary" x-text="cartCount"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click="logout()">
+                                <i class="material-icons">exit_to_app</i>
+                                Déconnexion
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mt-5">
+            <div class="row">
+        
+       <!-- Sidebar Modal -->
+        <div class="sidebar-modal" x-show="showCategories">
+            <div class="sidebar-content">
+                <button class="close-button" @click="toggleCategories()">×</button>
+                <h4>Catégories</h4>
+                <ul>
+                    <template x-for="category in categories" :key="category">
+                        <li @click="selectCategory(category)" x-text="category"></li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+                <!-- Main content for tickets -->
+                <div class="col-md-8">
+                    <div class="card shadow-sm mb-4" style="height: 70vh; overflow-y: auto; width: 100%; max-width: 800px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Tickets Disponibles</h5>
+                            <div class="row">
+                                <template x-for="ticket in filteredTickets" :key="ticket.id">
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card h-100" @click="addToCart(ticket)">
+                                            <img :src="'images/' + ticket.image" class="card-img-top" alt="Ticket Image">
+                                            <div class="card-body">
+                                                <h6 x-text="ticket.name" class="card-title"></h6>
+                                                <p class="card-text">
+                                                    <small class="text-muted" x-text="ticket.category"></small>
+                                                </p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="badge badge-primary badge-pill" x-text="ticket.price + ' €'"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Sidebar for cart -->
+                <div class="col-md-4 ml-md-auto" :class="{ 'shifted': showCategories }">
+                    <div class="card shadow-sm mb-4" style="width: 100%; height: 70vh;">
+                        <div class="card-body">
+                            <h5 class="card-title">Panier</h5>
+                            <!-- Cart items container -->
+                            <div class="cart-items">
+                                <ul class="list-group list-group-flush">
+                                    <template x-if="cart.length === 0">
+                                        <li class="list-group-item">Aucun ticket sélectionné</li>
+                                    </template>
+                                    <template x-for="item in cart" :key="item.id">
+                                        <li class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 x-text="item.name" class="mb-0"></h6>
+                                                    <small class="text-muted" x-text="item.quantity + ' x ' + item.price + ' €'"></small>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <button class="btn btn-outline-secondary btn-sm" @click="decrementTicket(item)">
+                                                        <i class="material-icons">remove</i>
+                                                    </button>
+                                                    <span class="mx-2" x-text="item.quantity"></span>
+                                                    <button class="btn btn-outline-secondary btn-sm" @click="incrementTicket(item)">
+                                                        <i class="material-icons">add</i>
+                                                    </button>
+                                                </div>
+                                                <button class="btn btn-outline-danger btn-sm" @click="removeFromCart(item)">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Payment buttons fixed at the bottom -->
+<div class="card-footer">
+    <h5 id="total" x-text="'Total : ' + getTotal() + ' €'"></h5>
+    <template x-if="!isCashInput">
+        <button class="btn btn-primary btn-block text-uppercase mb-2" @click="checkoutCash()">Payer Cash</button>
+    </template>
+    <template x-if="isCashInput">
+        <div>
+            <input type="number" class="form-control mb-2" placeholder="Montant donné" x-model="amountGiven" />
+            <button class="btn btn-primary btn-block text-uppercase mb-2" @click="processCashPayment()">Confirmer le Paiement</button>
+        </div>
+    </template>
+    <button class="btn btn-primary btn-block text-uppercase mb-2" @click="checkoutCard()">Payer par Carte</button>
+    <button class="btn btn-primary btn-block text-uppercase" @click="checkoutEWallet()">E-Wallet</button>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for cash payment -->
+        <div class="modal fade" id="cashModal" tabindex="-1" role="dialog" aria-labelledby="cashModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cashModalLabel">Payer en Cash</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="amountGiven">Montant donné (€):</label>
+                            <input type="number" class="form-control" id="amountGiven" x-model="amountGiven">
+                        </div>
+                        <div class="form-group">
+                            <label for="changeDue">Monnaie rendue (€):</label>
+                            <input type="text" class="form-control" id="changeDue" x-model="changeDue" readonly>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary" @click="processCashPayment">Confirmer le Paiement</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="static/js/app.js"></script>
+</body>
+</html>

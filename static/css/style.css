@@ -1,0 +1,356 @@
+/* Define root variables for consistent theming */
+:root {
+    --primary-color: #1a73e8; /* Main color used for primary elements */
+    --primary-hover-color: #1765cc; /* Darker shade for hover effects on primary elements */
+    --secondary-color: #34a853; /* Secondary color used for accent elements */
+    --background-color: #f8f9fa; /* Background color for the whole page */
+    --surface-color: #ffffff; /* Background color for surfaces like cards and navbars */
+    --on-surface-color: #202124; /* Text color on surface backgrounds */
+    --on-surface-variant-color: #5f6368; /* Text color for secondary elements on surfaces */
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Standard box shadow for subtle depth */
+    --transition-duration: 0.3s; /* Duration for all transitions */
+}
+
+/* Basic styling for the body */
+body {
+    font-family: 'Roboto', sans-serif; /* Font used throughout the site */
+    background-color: var(--background-color); /* Set background color */
+    color: var(--on-surface-color); /* Set text color */
+    line-height: 1.6; /* Line height for better readability */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+/* Styling for the navbar */
+.navbar {
+    background-color: var(--surface-color); /* Background color for the navbar */
+    box-shadow: var(--box-shadow); /* Apply box shadow */
+    height: 80px; /* Height of the navbar */
+    padding: 0 20px; /* Horizontal padding */
+    line-height: 80px; /* Align text vertically */
+    margin-bottom: 0px; /* Remove bottom margin */
+}
+
+/* Navbar brand logo */
+.navbar-brand img {
+    height: 40px; /* Set height for the logo */
+    transition: transform var(--transition-duration) ease; /* Smooth scaling effect */
+}
+
+/* Logo hover effect */
+.navbar-brand img:hover {
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+/* Card styling */
+.card {
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: var(--surface-color); /* Card background color */
+    transition: box-shadow var(--transition-duration), transform var(--transition-duration); /* Smooth transition effects */
+    margin-top: 10px; /* Space above each card */
+}
+
+/* Card hover effect */
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* More pronounced shadow on hover */
+    transform: translateY(-4px); /* Slightly lift the card on hover */
+}
+
+/* Button styling */
+.btn {
+    border-radius: 4px; /* Rounded button corners */
+    font-weight: 500; /* Semi-bold text */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 0.5px; /* Slightly increased letter spacing */
+    transition: all var(--transition-duration); /* Smooth transition for all properties */
+}
+
+/* Primary button styling */
+.btn-primary {
+    background-color: var(--primary-color); /* Primary background color */
+    border-color: var(--primary-color); /* Primary border color */  
+    transition: transform var(--transition-duration) ease;
+}
+
+/* Primary button hover effect */
+.btn-primary:hover {
+    background-color: var(--primary-hover-color); /* Change background color on hover */
+    border-color: var(--primary-hover-color); /* Change border color on hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+    transform: scale(0.9); /* Reduce size to 90% */
+    
+}
+
+/* List group item styling */
+.list-group-item {
+    border: none; /* Remove default border */
+    padding: 1rem 1.25rem; /* Padding inside list items */
+    transition: background-color var(--transition-duration); /* Smooth background color change */
+}
+
+/* List item hover effect */
+.list-group-item:hover {
+    background-color: #f1f3f4; /* Light background color on hover */
+}
+
+/* Active list item styling */
+.list-group-item.active {
+    background-color: #e8f0fe; /* Background color for active state */
+    color: var(--primary-color); /* Text color for active state */
+    border-color: #e8f0fe; /* Border color for active state */
+}
+
+/* Form control styling */
+.form-control {
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #dadce0; /* Light border color */
+    padding: 0.75rem 1rem; /* Padding inside form controls */
+    transition: border-color var(--transition-duration), box-shadow var(--transition-duration); /* Smooth transition for border and shadow */
+}
+
+/* Focus state for form controls */
+.form-control:focus {
+    border-color: var(--primary-color); /* Change border color on focus */
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2); /* Add shadow on focus */
+}
+
+/* Badge primary styling */
+.badge-primary {
+    background-color: var(--primary-color); /* Background color for primary badges */
+}
+
+/* Material icons styling */
+.material-icons {
+    font-size: 20px; /* Font size for icons */
+    vertical-align: middle; /* Align icons with text */
+}
+
+/* Typography improvements for card titles */
+h5.card-title {
+    font-size: 1.25rem; /* Font size for card titles */
+    font-weight: 500; /* Semi-bold text */
+    margin-bottom: 1rem; /* Space below the title */
+    color: var(--on-surface-color); /* Text color */
+}
+
+/* Typography improvements for subheadings */
+h6 {
+    font-size: 1rem; /* Font size for subheadings */
+    font-weight: 500; /* Semi-bold text */
+    color: var(--on-surface-color); /* Text color */
+}
+
+/* Styling for small text */
+small {
+    font-size: 0.875rem; /* Font size for small text */
+    color: var(--on-surface-variant-color); /* Text color */
+}
+
+/* Custom fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; } /* Start with opacity 0 */
+    to { opacity: 1; } /* End with opacity 1 */
+}
+
+/* Apply fade-in animation to list group items */
+.list-group-item {
+    animation: fadeIn var(--transition-duration) ease-in-out; /* Fade-in effect */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        margin-bottom: 5px; /* Reduce margin for smaller screens */
+    }
+    .card {
+        margin-top: 5px; /* Adjust margin for smaller screens */
+    }
+}
+
+/* Responsive improvements for containers and cards */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem; /* Adjust padding for smaller screens */
+        padding-right: 1rem; /* Adjust padding for smaller screens */
+    }
+    
+    .card {
+        margin-bottom: 1rem; /* Adjust margin for cards */
+    }
+}
+
+/* Custom illustration placeholder */
+.culture-illustration {
+    width: 100%; /* Full width */
+    height: 200px; /* Set height */
+    background-color: #e8f0fe; /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    display: flex; /* Flexbox for centering */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    margin-bottom: 1rem; /* Space below the illustration */
+}
+
+/* Illustration content */
+.culture-illustration::after {
+    content: '🎨🎭🎵'; /* Placeholder content */
+    font-size: 3rem; /* Font size for the content */
+}
+
+/* Adjust spacing and column order for larger screens */
+@media (min-width: 768px) {
+    .order-md-1 {
+        order: -2; /* Move categories column to the left */
+    }
+    .order-md-2 {
+        order: 0; /* Center tickets column */
+    }
+    .order-md-3 {
+        order: 1; /* Move cart column to the right */
+    }
+}
+
+/* Style for the card containing the cart */
+.card {
+    display: flex; /* Flexbox for layout */
+    flex-direction: column; /* Stack content vertically */
+    height: 100%; /* Full height of the container */
+}
+
+/* Card body layout */
+.card-body {
+    display: flex; /* Flexbox for layout */
+    flex-direction: column; /* Stack content vertically */
+    height: 100%; /* Full height of the parent */
+}
+
+/* Container for cart items */
+.cart-container {
+    flex: 1; /* Take up remaining space */
+    overflow: hidden; /* Hide overflow */
+}
+
+/* Ensure payment buttons stay at the bottom */
+.card-footer {
+    padding: 0.75rem 1.25rem; /* Padding around buttons */
+    background-color: #f8f9fa; /* Background color for footer */
+    border-top: 1px solid #dee2e6; /* Border to separate from cart items */
+}
+
+/* Cart items container */
+.cart-items {
+    flex: 1; /* Take up remaining space */
+    max-height: 400px; /* Maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 15px; /* Space for scrollbar */
+}
+
+/* Sidebar styles */
+.categories-sidebar {
+    display: none; /* Hide sidebar by default */
+    transition: all 0.3s ease; /* Smooth transition for visibility */
+}
+
+/* Show sidebar when active */
+.categories-sidebar.show {
+    display: block; /* Show sidebar */
+}
+
+/* Card styling for categories sidebar */
+.categories-card {
+    min-height: 70vh; /* Minimum height */
+}
+
+/* Sidebar Modal Styles */
+.sidebar-modal {
+    position: fixed; /* Fixed position */
+    top: 0; /* Top alignment */
+    left: 0; /* Left alignment */
+    width: 300px; /* Width of the sidebar */
+    height: 100%; /* Full height */
+    background: var(--surface-color); /* Background color */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    transform: translateX(-100%); /* Initially off-screen to the left */
+    transition: transform var(--transition-duration) ease; /* Smooth slide-in effect */
+    z-index: 1050; /* Ensure it is above other content */
+    display: flex; /* Flexbox for layout */
+    flex-direction: column; /* Stack content vertically */
+}
+
+/* Sidebar show effect */
+.sidebar-modal[x-show="showCategories"] {
+    transform: translateX(0); /* Slide in from the left */
+}
+
+/* Sidebar content styling */
+.sidebar-content {
+    padding: 20px; /* Padding inside sidebar */
+    height: 100%; /* Full height */
+    overflow-y: auto; /* Enable scrolling */
+    background-color: var(--surface-color); /* Background color */
+    color: var(--on-surface-color); /* Text color */
+}
+
+/* Close button styling in the sidebar */
+.close-button {
+    background: var(--primary-color); /* Background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove default border */
+    padding: 10px; /* Padding around button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1.25rem; /* Font size */
+    position: absolute; /* Absolute positioning */
+    top: 20px; /* Distance from top */
+    right: 20px; /* Distance from right */
+    transition: background-color var(--transition-duration); /* Smooth background color change */
+}
+
+/* Close button hover effect */
+.close-button:hover {
+    background: var(--primary-hover-color); /* Change background color on hover */
+}
+
+/* Sidebar heading styling */
+.sidebar-content h4 {
+    margin-top: 0; /* Remove top margin */
+    color: var(--primary-color); /* Heading color */
+}
+
+/* Sidebar list items */
+ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 20px 0; /* Margin around the list */
+}
+
+li {
+    margin: 10px 0; /* Margin between list items */
+    padding: 10px; /* Padding inside list items */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color var(--transition-duration), color var(--transition-duration); /* Smooth background color and text color changes */
+}
+
+
+/* Active list item styling */
+li.active {
+    background-color: var(--primary-hover-color); /* Background color for active state */
+    color: #fff; /* White text color */
+}
+/* Réduire la marge inférieure de la navbar */
+.navbar {
+    margin-bottom: 0; /* Réduit la marge inférieure */
+}
+
+/* Réduire la marge supérieure des cartes */
+.card {
+    margin-top: 0; /* Réduit la marge supérieure */
+}
+
+/* Réduire le padding général de la page si nécessaire */
+body {
+    padding-top: 0; /* Ajustez cette valeur si la page a un padding */
+    margin-top: 0; /* Réduit la marge générale si nécessaire */
+}
