@@ -1,4 +1,5 @@
-# YANCAISSE
+npm install 
+after cloning
 
 
 
