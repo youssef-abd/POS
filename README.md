@@ -13,13 +13,13 @@ This sophisticated POS system revolutionizes ticket sales for cultural events an
 
 ### Key Highlights
 
-- **🔐 Secure Authentication**: Role-based access control with encrypted user codes
-- **💳 Multi-Payment Support**: Cash, Card, and E-Wallet payment processing
-- **📊 Real-time Analytics**: Live transaction tracking and reporting
-- **🎯 Category Management**: Organized ticket categorization (Exhibitions, Concerts, Workshops, etc.)
-- **📱 Responsive Design**: Optimized for desktop and tablet use
-- **🧾 Digital Receipts**: Professional receipt generation with printing capabilities
-- **🐳 Docker Ready**: Containerized deployment for scalability
+- **Secure Authentication**: Role-based access control with encrypted user codes
+- **Multi-Payment Support**: Cash, Card, and E-Wallet payment processing
+- **Real-time Analytics**: Live transaction tracking and reporting
+- **Category Management**: Organized ticket categorization (Exhibitions, Concerts, Workshops, etc.)
+- **Responsive Design**: Optimized for desktop and tablet use
+- **Digital Receipts**: Professional receipt generation with printing capabilities
+- **Docker Ready**: Containerized deployment for scalability
 
 ## 🏗Architecture
 
@@ -115,39 +115,6 @@ This sophisticated POS system revolutionizes ticket sales for cultural events an
 ### Prerequisites
 - Node.js 14+ installed
 - MySQL 5.7+ running
-- Docker & Docker Compose (optional)
-
-### Option 1: Docker Deployment (Recommended)
-
-```bash
-# Clone the repository
-git clone https://gitlab.com/zakaria0011/yancaisse.git
-cd yancaisse
-
-# Start the application
-docker-compose up -d
-
-# Access the application
-open http://localhost:4000
-```
-
-### Option 2: Manual Setup
-
-```bash
-# Clone and install dependencies
-git clone https://gitlab.com/zakaria0011/yancaisse.git
-cd yancaisse
-npm install
-
-# Configure database (update backend/db.js with your credentials)
-mysql -u root -p < database/schema.sql
-
-# Start the application
-npm start
-
-# Access the application
-open http://localhost:4000
-```
 
 ## Configuration
 
@@ -195,44 +162,6 @@ INSERT INTO users (auth_code) VALUES ('ADMIN123');
 - Monitor sales analytics
 - Manage user access codes
 
-##  API Endpoints
-
-```http
-POST /api/login
-# Authenticate user with auth code
-
-GET /api/tickets
-# Retrieve all available tickets
-
-GET /api/data
-# Get transaction history
-
-POST /api/checkout
-# Process payment and create transaction
-Content-Type: application/json
-{
-  "paymentMethod": "Cash|Card|E-Wallet",
-  "total": 25.50,
-  "cart": [...],
-  "auth_code": "USER123"
-}
-```
-
-##  Testing
-
-```bash
-# Test database connection
-curl http://localhost:4000/api/data
-
-# Test authentication
-curl -X POST http://localhost:4000/api/login \
-  -H "Content-Type: application/json" \
-  -d '{"auth_code":"ADMIN123"}'
-
-# Test ticket retrieval
-curl http://localhost:4000/api/tickets
-```
-
 ## Performance Features
 
 - **Efficient Queries**: Optimized database queries with proper indexing
@@ -257,20 +186,6 @@ curl http://localhost:4000/api/tickets
 - **Mobile Responsive**: Optimized for various screen sizes
 - **Accessibility**: Proper contrast and semantic markup
 
-##  Deployment
-
-### Production Deployment
-```bash
-# Build production image
-docker build -t cultural-pos .
-
-# Deploy with Docker Compose
-docker-compose -f docker-compose.prod.yml up -d
-
-# Scale services
-docker-compose scale app=3
-```
-
 ### Environment Setup
 - Configure production database credentials
 - Set up SSL certificates for HTTPS
@@ -287,3 +202,4 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 - Email: [Contact Information]
 - LinkedIn: [Your LinkedIn Profile]
 - Portfolio: [Your Portfolio Website]
+
