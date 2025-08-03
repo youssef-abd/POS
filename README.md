@@ -199,7 +199,8 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 ##  Developer
 
 **Youssef Abd**
-- Email: [Contact Information]
-- LinkedIn: [Your LinkedIn Profile]
-- Portfolio: [Your Portfolio Website]
+- Github : https://github.com/youssef-abd
+- LinkedIn: https://www.linkedin.com/in/youssef-abdelmoumene/
+- Portfolio: 
+
 
